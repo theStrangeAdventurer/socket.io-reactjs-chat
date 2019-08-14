@@ -8,9 +8,6 @@
     "build": "webpack --mode production --progress",
     "start": "serve -s dist -l 4000"
   },
-  "browser": {
-    "child_process": false
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
