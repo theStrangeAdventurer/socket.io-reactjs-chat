@@ -15,19 +15,8 @@ const UsersBar = ({ onChoose = f => f, socket, className }) => {
       setUsers(response.data);
     };
     fetchUsers();
-    socket.on(E.ENABLE_USER_FROM_SERVER, ({ id }) => {
-      setUsers(users =>
-        users.map(user =>
-          user.id === id
-            ? {
-                ...user,
-                available: true
-              }
-            : user
-        )
-      );
-    });
-    socket.on(E.CHOOSE_USER_FROM_SERVER, ({ id }) => {
+
+    const chooseHandle = ({ id }) => {
       setUsers(users =>
         users.map(user =>
           user.id === id
@@ -38,7 +27,28 @@ const UsersBar = ({ onChoose = f => f, socket, className }) => {
             : user
         )
       );
-    });
+    };
+
+    const enableHandle = ({ id }) => {
+      setUsers(users =>
+        users.map(user =>
+          user.id === id
+            ? {
+                ...user,
+                available: true
+              }
+            : user
+        )
+      );
+    };
+
+    socket.on(E.ENABLE_USER_FROM_SERVER, enableHandle);
+    socket.on(E.CHOOSE_USER_FROM_SERVER, chooseHandle);
+
+    return () => {
+      socket.off(E.CHOOSE_USER_FROM_SERVER, chooseHandle);
+      socket.off(E.ENABLE_USER_FROM_SERVER, enableHandle);
+    };
   }, []);
 
   if (users.length < 1) {
@@ -72,7 +82,7 @@ const StyledUsersBar = styled(UsersBar)`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   grid-gap: 10px;
-  padding: 10px;
+  padding: 10px 0;
   text-align: center;
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;

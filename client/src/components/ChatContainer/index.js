@@ -1,30 +1,31 @@
 import styled from 'styled-components';
 
 export default styled.div`
-    position: fixed;
-    box-sizing: border-box;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 1em
-    font-family: sans-serif;
-    width: 100%;
-    height: 100%;
-    max-width: 480px;
-    max-height: 720px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  width: 100%;
+  height: 100%;
+  > div {
+    position: relative;
+    width: 100vw;
+    max-width: 375px;
+    min-height: 640px;
+    padding: 10px;
     border: 1px solid #ddd;
-    form,
-    div {
-        box-sizing: border-box;
+  }
+  form,
+  div {
+    box-sizing: border-box;
+  }
+  @media (max-width: 480px) {
+    > div {
+      max-width: 100%;
+      min-height: 100vh;
+      padding: 4px;
+      border: none;
     }
-    @media (max-width: 480px) {
-        border: 1px solid transparent;
-        position: static;
-        width: 100%;
-        height: 100%;
-        transform: unset;
-        padding: .4em;
-        max-width: 375px;
-        max-height: calc(100% - 32px);
-    }
+  }
 `;
