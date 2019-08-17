@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
-const Form = ({ loggedIn = false, onSubmit = () => console.log('onSubmit work'), className }) => {
+const Form = ({ onSubmit = f => f, className }) => {
   const [message, setMessage] = useState('');
   const messageHandle = e => {
     const value = e.target.value;
